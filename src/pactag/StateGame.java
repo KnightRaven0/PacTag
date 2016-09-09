@@ -63,7 +63,7 @@ public class StateGame extends GameState{
 
 	@Override
 	public void Draw(Graphics g) {
-		Image ImageWall = GameRender.GetImage("tempWall.png");
+		Image ImageWall = GameRender.GetImage("smallWall.png");
 		Image Player1 = GameRender.GetImage("tempChar1.png");
 		Image Player2 = GameRender.GetImage("tempChar2.png");
 		int X = CurrentMap.GetSizeX();	//Get how big the map is in tiles
@@ -71,12 +71,12 @@ public class StateGame extends GameState{
 		for (int i = 0; i < Y; i++){	//Loop through each of the FIRST LAYER which represents the Y Axis
 			for (int j = 0; j < X; j++){	//Same thing but for the X Axis
 				if (CurrentMap.GetCellTile(j, i) == Map.Tile.WALL){	//If the tile to draw is a Wall, add a Wall Label to the Grid else put empty Label
-					g.drawImage(ImageWall, 32 * j, 32 * i, 32, 32, null);
+					g.drawImage(ImageWall, 16 * j, 16 * i, 16, 16, null);
 				}
 			}
 		}
 		
-		g.drawImage(Player1, (int)P1.GetPosition().GetX() * 32 + P1.GetShiftX(), (int)P1.GetPosition().GetY() * 32 + P1.GetShiftY(), 32, 32, null);
-		g.drawImage(Player2, (int)P2.GetPosition().GetX() * 32 + P2.GetShiftX(), (int)P2.GetPosition().GetY() * 32 + P2.GetShiftY(), 32, 32, null);
+		g.drawImage(Player1, (int)P1.GetPosition().GetX() * 16 + P1.GetShiftX(), (int)P1.GetPosition().GetY() * 16 + P1.GetShiftY(), 16, 16, null);
+		g.drawImage(Player2, (int)P2.GetPosition().GetX() * 16 + P2.GetShiftX(), (int)P2.GetPosition().GetY() * 16 + P2.GetShiftY(), 16, 16, null);
 	}
 }

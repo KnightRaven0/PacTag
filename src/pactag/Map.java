@@ -1,5 +1,8 @@
 package pactag;
 
+import java.util.Scanner;
+
+
 /**
  *
  * @author Josh
@@ -13,21 +16,39 @@ public class Map {
 	private static Tile[][] Grid;
 	private static int GridSizeX = 0;
 	private static int GridSizeY = 0;
+	
+	private String fileName = "/Resources/pacMap.txt";
 
 	public  Map(int SizeX, int SizeY) {
-		Grid = new Tile[SizeX][SizeY];
-		for (int i = 0; i < SizeX; i++) {
-			for (int j = 0; j < SizeY; j++) {
-				if (i == 0 || i == SizeX - 1 || j == 0 || j == SizeY - 1) {
-					Grid[i][j] = Tile.WALL;
-				} else {
-					Grid[i][j] = Tile.OPEN;
+		makeMap();
+		
+	}
+	
+	private void makeMap() {
+		try(Scanner reader = new Scanner(GamePanel.class.getResourceAsStream(fileName))) {
+
+			while(reader.hasNextLine()) {
+				String[] dimensions = reader.nextLine().split(",");
+				GridSizeX = Integer.parseInt(dimensions[0]);
+				GridSizeY = Integer.parseInt(dimensions[1]);
+				Grid = new Tile[GridSizeX][GridSizeY];
+				
+				for(int i = 0; i < GridSizeY; i++) {
+					char[] nextLine = reader.nextLine().toCharArray();
+					for(int j = 0; j < GridSizeX; j++) {
+						if(nextLine[j] == '#') {
+							Grid[j][i] = Tile.WALL;
+						}
+						else {
+							Grid[j][i] = Tile.OPEN;
+						}
+					}
 				}
+
 			}
 		}
-		GridSizeY = Grid.length;
-		if (GridSizeY >= 0){
-			GridSizeX = Grid[0].length;
+		catch(NumberFormatException e) {
+			System.err.println("Number could not be parsed, check the formatting of the map text file.");
 		}
 	}
 
